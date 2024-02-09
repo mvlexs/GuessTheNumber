@@ -1,8 +1,8 @@
 import random
 import number
+import string
 
-obj = number.Number(0,0,0,0)
-
+obj = number.Number(0,0,0,0,0,0)
 def gameloop():
     obj.randomNumber = random.randint(obj.minRange,obj.maxRange)
     print ("I have chosen my number, try and guess it! :D")
@@ -17,6 +17,8 @@ def gameloop():
             x += 1
         elif obj.guessNumber == int(obj.randomNumber):
             print("Congrats! You guessed my number")
+            obj.score += 1
+            obj.displayScore()
             playAgain()
             x = 4 
             # add playagain with same range
@@ -33,10 +35,14 @@ def gameloop():
             x += 1
         elif obj.guessNumber == int(obj.randomNumber):
             print("Congrats! You guessed my number")
+            obj.score += 1
+            obj.displayScore()
             playAgain()
             x = 4 
     while x == 3:
         print ("You are out of guesses, you lose :(\nMy Number was: " + str(obj.randomNumber))
+        obj.score -= 1
+        obj.displayScore()
         playAgain()
     while x > 3:
         print("What the heck did you do?")
@@ -45,13 +51,10 @@ def gameloop():
 
 def play():
     print ("Please enter the lowest number you want to be in range for our guessing game.")
-    obj.minRange = int(input())
-    
-    print ("Now please enter the highest number you want to be in range.")
-    obj.maxRange = int(input())
-   
+    obj.getMinRange()
+    print ("Please enter the highest number you want to be in range for our guessing game.")
+    obj.getMaxRange()
     #add handler for input() =! int
-    
     gameloop()
     
 
@@ -61,9 +64,9 @@ def playAgain():
     ab = 1
     while ab == 1:
         y = input()
-        if y == "y" or y == "yes" or y == "Yes" or y == "YES":
+        if y.lower() == "y" or y.lower() == "yes":
             same()     
-        elif y == "n" or y == "no" or y == "No" or y == "NO":
+        elif y.lower() == "n" or y.lower() == "no":
             exit()
         else:
             print("Unrecognized input, please try again")
@@ -74,9 +77,9 @@ def same():
     bc = 1
     while bc == 1:
         i = input()
-        if i == "y" or i == "yes" or i == "Yes" or i == "YES":
+        if i.lower() == "y" or i.lower() == "yes":
             gameloop()
-        elif i == "n" or i == "no" or i == "No" or i == "NO":
+        elif i.lower() == "n" or i.lower() == "no":
             play()
         else:
             print("Unrecognized input, please try again")
